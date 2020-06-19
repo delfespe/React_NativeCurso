@@ -1,4 +1,13 @@
-## Montar sistema de navegacion
+## Git
+
+alias.lg=log --oneline --decorate --all --graph
+alias.s=status -s -b
+
+## Prerequisitos
+
+https://yarnpkg.com/
+
+## React Navegation: stack, tab
 
 Instaladar dependencia react-natigation
 Ir a https://reactnavigation.org/docs/getting-started
@@ -18,19 +27,20 @@ yarn add @react-navigation/stack@~5.2.10
 Instalar react-navigation tab:
 yarn add @react-navigation/bottom-tabs@~5.2.6
 
-## instalacion de react native elements
+## React Native Elements: iconos
 
 yarn add react-native-elements@~1.2.7
 
-iconos:
+web iconos:
 https://materialdesignicon.com
 
-## Instalar Firebase 7.14
- yarn add firabase@~7.9.0
+## Firebase 7.14
+
+yarn add firebase@~7.9.0
 
 // ./app/utils/firabase.js
- import firebase from "firebase/app";
- 
+import firebase from "firebase/app";
+
 const firebaseConfig = {
     apiKey: "AIzaSyC2uInZSGC0wcQxWLcf3SO50agnfNGkQVE",
     authDomain: "tenedores-60e31.firebaseapp.com",
@@ -41,26 +51,25 @@ const firebaseConfig = {
     appId: "1:716914455653:web:88ff256a454f4a2e83828c"
   };
 
- export  const firabaseApp =  firebase.initializeApp(firebaseConfig);
+export  const firabaseApp = firebase.initializeApp(firebaseConfig);
 
 // app.js
 …
- import React, { useEffect} from "react";
- import  { firebaseApp } from "./app/utils/firebase";
- import * firebase from "firebase";
+import React, { useEffect} from "react";
+import { firebaseApp } from "./app/utils/firebase";
+import \* as firebase from "firebase";
 
- export default function App() {
- 
+export default function App() {
+
 useEffect( () => {
-  firabase.auth().onAuthStateChange( (user) => {
-  console.log(user);
+firebase.auth().onAuthStateChange( (user) => {
+console.log(user);
 } );
 }, [] )
 
- return <Navigation />;
+return <Navigation />;
 }
 
 //====== comit -m "Añadir proyecto Firebase: probar"
 
 // ./app/Account/UserGuest.js
-

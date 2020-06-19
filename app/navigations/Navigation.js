@@ -7,7 +7,6 @@ import FavoriteStack from "../navigations/FavoriteStack";
 import TopRestauranrStack from "../navigations/TopRestauranrStack";
 import SearchStack from "../navigations/SearchStack";
 import AccountStack from "../navigations/AccountStack";
-
 import { Icon } from "react-native-elements";
 
 const Tab = createBottomTabNavigator();
