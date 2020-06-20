@@ -34,42 +34,8 @@ yarn add react-native-elements@~1.2.7
 web iconos:
 https://materialdesignicon.com
 
-## Firebase 7.14
+## Firebase; prueba
 
 yarn add firebase@~7.9.0
 
-// ./app/utils/firabase.js
-import firebase from "firebase/app";
-
-const firebaseConfig = {
-    apiKey: "AIzaSyC2uInZSGC0wcQxWLcf3SO50agnfNGkQVE",
-    authDomain: "tenedores-60e31.firebaseapp.com",
-    databaseURL: "https://tenedores-60e31.firebaseio.com",
-    projectId: "tenedores-60e31",
-    storageBucket: "tenedores-60e31.appspot.com",
-    messagingSenderId: "716914455653",
-    appId: "1:716914455653:web:88ff256a454f4a2e83828c"
-  };
-
-export  const firabaseApp = firebase.initializeApp(firebaseConfig);
-
-// app.js
-…
-import React, { useEffect} from "react";
-import { firebaseApp } from "./app/utils/firebase";
-import \* as firebase from "firebase";
-
-export default function App() {
-
-useEffect( () => {
-firebase.auth().onAuthStateChange( (user) => {
-console.log(user);
-} );
-}, [] )
-
-return <Navigation />;
-}
-
-//====== comit -m "Añadir proyecto Firebase: probar"
-
-// ./app/Account/UserGuest.js
+## Screen diferente si logueado
