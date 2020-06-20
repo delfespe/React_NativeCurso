@@ -38,4 +38,4 @@ https://materialdesignicon.com
 
 yarn add firebase@~7.9.0
 
-## Screen diferente si logueado
+## Componente loading y Screen no logueado
