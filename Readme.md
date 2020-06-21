@@ -39,3 +39,19 @@ https://materialdesignicon.com
 yarn add firebase@~7.9.0
 
 ## Componente loading y Screen no logueado
+
+## Screen login y registro
+
+// desde la componente UserGuest.js navegar al screen loginscr creado en AccountStack
+import { useNavigation } from "@react-navigation/native";
+
+const navigation = useNavigation();
+
+          onPress={() => navigation.navigate("loginscr")}
+
+// AccountStack.js
+<Stack.Screen
+name="loginscr"
+component={Login}
+options={{ title: "Iniciar sesión" }}
+/>
