@@ -55,3 +55,29 @@ name="loginscr"
 component={Login}
 options={{ title: "Iniciar sesión" }}
 />
+
+## Crear el formulario de Registro de usuarios
+
+### Evitar que el teclado oculte el input
+
+// instalar react-native-keyboard-aware-scroll-view
+yarn add react-native-keyboard-aware-scroll-view@~0.9.1
+
+// funciona en orden jerarquico, en Register.js
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+//reemplezar <View> por <KeyboardAwareScrollView>
+// con el KeyboardAwareScrollView ya se puede usar los estilos en RegisterForm.js formContainer
+
+### Ocultar/Mostrar password presionando icono y usando estados
+
+// RegisterForm.js
+const [showPassword, setshowPassword] = useState(false);
+<Input
+secureTextEntry={showPassword ? false : true}
+rightIcon={
+<Icon
+type="material-community"
+name={showPassword ? "eye-off" : "eye-outline"}
+iconStyle={styles.iconRight}
+onPress={() => setshowPassword(!showPassword)}
+/>
