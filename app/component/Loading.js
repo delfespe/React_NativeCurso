@@ -2,11 +2,13 @@ import React from "react";
 import { StyleSheet, View, Text, ActivityIndicator } from "react-native";
 // modal
 import { Overlay } from "react-native-elements";
+import Modal from "modal-react-native-web";
 
 export default function (props) {
   const { isVisible, text } = props;
   return (
     <Overlay
+      ModalComponent={Modal}
       isVisible={isVisible}
       windowBackgroundColor="rgba(0,0,0,0.5)"
       overlayBackgroundColor="transparent"

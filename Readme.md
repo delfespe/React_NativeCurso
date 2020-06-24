@@ -126,9 +126,27 @@ import Toast from "react-native-easy-toast";
 <RegisterForm toastRef={toastRef} />
 ...
 <Toast ref={toastRef} position="center" opacity={0.9}></Toast>
-// en RegisterForm.js
+
+## Registrar usuario en Firebase: loading y navegar
 
 // configurar Firebase, ir a: https://console.firebase.google.com/u/0/project/tenedores-60e31/authentication/users?hl=es
 // seleccionar: Signin method
 // Seleccionar inicion de sesion: Correo electronico y contraseña
 // seleccionar: Habilitar y Guardar
+
+// en RegisterForm.js
+const onSubmit = () => {
+...
+} else {
+//console.log("ok");
+firebase
+.auth()
+.createUserWithEmailAndPassword(formData.email, formData.password)
+.then((response) => {
+//console.log(response);
+navigation.navigate("account");
+})
+
+// probar creando usuario: despejod@gmail.com
+// para que funcione el loading en web
+yarn add modal-react-native-web
