@@ -150,3 +150,12 @@ navigation.navigate("account");
 // probar creando usuario: despejod@gmail.com
 // para que funcione el loading en web
 yarn add modal-react-native-web
+
+## Formulario Login
+
+// navegacion:
+Account -> UserGuest -> Login (toast)
+------------------------------> LoginForm
+------------------------------> Register (toast)
+----------------------------------------> RegisterForm
+---------> UserLogged

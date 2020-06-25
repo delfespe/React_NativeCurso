@@ -39,7 +39,7 @@ export default function RegisterForm(props) {
       );
     } else {
       //console.log("ok");
-      //setLoading(true);
+      setLoading(true);
       firebase
         .auth()
         .createUserWithEmailAndPassword(formData.email, formData.password)
