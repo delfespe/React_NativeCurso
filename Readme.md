@@ -159,3 +159,12 @@ Account -> UserGuest -> Login (toast)
 ------------------------------> Register (toast)
 ----------------------------------------> RegisterForm
 ---------> UserLogged
+
+## Login contra firebase
+
+//En LoginForm.js
+const onsubmit = () => {
+...
+firebase
+.auth()
+.signInWithEmailAndPassword(formData.email, formData.password)
