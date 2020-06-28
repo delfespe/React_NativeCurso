@@ -158,7 +158,7 @@ Account -> UserGuest -> Login (toast)
 ------------------------------> LoginForm
 ------------------------------> Register (toast)
 ----------------------------------------> RegisterForm
----------> UserLogged
+---------> UserLogged (toast)
 
 ## Login contra firebase
 
@@ -168,3 +168,32 @@ const onsubmit = () => {
 firebase
 .auth()
 .signInWithEmailAndPassword(formData.email, formData.password)
+
+## Estructura panel usuario, obtener datos desde firebase y mostratlo
+
+//En UserLogged.js obtener los datos del usuario asincronamente
+useEffect(() => {
+(async () => {
+const user = await firebase.auth().currentUser;
+setUserInfo(user);
+})();
+}, []);
+
+//En InfoUser.js mostrar datos
+export default function InfoUser(props) {
+const {
+userInfo: { photoURL, displayName, email },
+} = props;
+
+...
+<Avatar
+source={
+photoURL
+? { uri: photoURL }
+: require("../../../assets/avatar-default.jpg")
+}
+/>
+<Text style={styles.displayName}>
+{displayName ? displayName : "Anonimo"}
+</Text>
+<Text>{email ? email : "Social Login"}</Text>
