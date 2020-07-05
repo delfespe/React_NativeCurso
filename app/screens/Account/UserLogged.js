@@ -6,10 +6,11 @@ import Loading from "../../component/Loading";
 import Toast from "react-native-easy-toast";
 import InforUser from "../Account/InfoUser.js";
 import InfoUser from "../Account/InfoUser.js";
+import AccountOptions from "../Account/AccountOptions";
 
 export default function Userlogged() {
   const [loading, setLoading] = useState(false);
-  const [loadingText, setloadingText] = useState("Hola");
+  const [loadingText, setLoadingText] = useState("Hola");
   const [userInfo, setUserInfo] = useState(null);
   const toastRef = useRef();
   useEffect(() => {
@@ -21,8 +22,15 @@ export default function Userlogged() {
 
   return (
     <View style={styles.viewUserInfo}>
-      {userInfo && <InfoUser userInfo={userInfo} />}
-      <Text>AccountOptions...</Text>
+      {userInfo && (
+        <InfoUser
+          userInfo={userInfo}
+          toastRef={toastRef}
+          setLoading={setLoading}
+          setLoadingText={setLoadingText}
+        />
+      )}
+      <AccountOptions />
       <Button
         title="Cerrar sesion"
         buttonStyle={styles.btnCloseSesion}

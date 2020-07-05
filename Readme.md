@@ -159,6 +159,7 @@ Account -> UserGuest -> Login (toast)
 ------------------------------> Register (toast)
 ----------------------------------------> RegisterForm
 ---------> UserLogged (toast)
+---------------------> InfoUser
 
 ## Login contra firebase
 
@@ -169,7 +170,7 @@ firebase
 .auth()
 .signInWithEmailAndPassword(formData.email, formData.password)
 
-## Estructura panel usuario, obtener datos desde firebase y mostratlo
+## Estructura panel usuario, obtener datos desde firebase y mostrarlo
 
 //En UserLogged.js obtener los datos del usuario asincronamente
 useEffect(() => {
@@ -197,3 +198,62 @@ photoURL
 {displayName ? displayName : "Anonimo"}
 </Text>
 <Text>{email ? email : "Social Login"}</Text>
+
+## Subir imagen a firebase, instalar paquetes acceso a mobil
+
+// permite pedir los permisos al usuario de los recursos del mobile
+https://docs.expo.io/versions/latest/sdk/permissions/
+//buscar el paquete expo-permissions en yarn
+yarn add expo-permissions@~8.1.0
+// permite acceder a la galeria del mobile
+https://docs.expo.io/versions/latest/sdk/imagepicker/
+yarn add expo-image-picker@~8.1.0
+
+// Permiso para que Expo(emulador) pueda accedea a la Galeria:en app.json adicionar
+"android": {
+"permissions": ["CAMERA_ROLL"]
+}
+
+// obtener permiso Galeria de imagenes: en InfoUser.js
+export default function InfoUser(props) {
+...
+const changeAvatar = async () => {
+const resultPermission = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+const resultPermisssionCamera = resultPermission.permissions.cameraRoll.status;
+if (resultPermisssionCamera === "denied") {
+toastRef.current.show("Es necesario aceptar los permisos en la galeria");
+} else {
+const result = await imagePicker.launchImageLibraryAsync({
+allowsEditing: true,
+aspect: [4, 3],
+});
+}
+if (result.cancelled) {
+toastRef.current.show("Has cerrado la seleccion de imagenes");
+} else {
+uploaddImage(result.uri)
+.then(() => {
+toastRef.current.show("Imagen de avatar subida");
+})
+.catch(() => {
+toastRef.current.show("Error al actualizar avatar");
+});
+}
+}
+};
+
+// Para que la App pueda acceder a la Galeria de Android ver permisos en:
+https://docs.expo.io/versions/latest/sdk/permissions/#android-permissions-equivalents-inside-appjson
+
+// Adicionaer en : app.json
+"android": {
+"permissions": [
+"CAMERA_ROLL",
+"READ_EXTERNAL_STORAGE",
+"WRITE_EXTERNAL_STORAGE"
+]
+}
+
+// No mostrar warning en el mobile
+import { YellowBox } from "react-native";
+YellowBox.ignoreWarnings(["Setting a timer"]);
