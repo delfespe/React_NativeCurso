@@ -4,7 +4,6 @@ import * as firebase from "firebase";
 import { Button } from "react-native-elements";
 import Loading from "../../component/Loading";
 import Toast from "react-native-easy-toast";
-import InforUser from "../Account/InfoUser.js";
 import InfoUser from "../Account/InfoUser.js";
 import AccountOptions from "../Account/AccountOptions";
 
@@ -30,7 +29,7 @@ export default function Userlogged() {
           setLoadingText={setLoadingText}
         />
       )}
-      <AccountOptions />
+      <AccountOptions userInfo={userInfo} toastRef={toastRef} />
       <Button
         title="Cerrar sesion"
         buttonStyle={styles.btnCloseSesion}

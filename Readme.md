@@ -257,3 +257,43 @@ https://docs.expo.io/versions/latest/sdk/permissions/#android-permissions-equiva
 // No mostrar warning en el mobile
 import { YellowBox } from "react-native";
 YellowBox.ignoreWarnings(["Setting a timer"]);
+
+## Lista opciones cuenta usuario, modal al seleccionar item
+
+// en AccountOptions.js:
+...
+const [renderComponent, setRenderComponent] = useState(null);
+const selectComponent = (key) => {
+switch (key) {
+case "displayName":
+setRenderComponent(<Text>Cambiando nombres...</Text>);
+setshowModal(true);
+break;
+...
+};
+
+const menuOptions = generateOptions(selectComponent);
+return (
+<View>
+{map(menuOptions, (menu, index) => (
+<ListItem key={index} title={menu.title} 
+onPress={menu.onPress}/>
+))}
+{renderComponent && (
+<Modal isVisible={showModal} setVisible={setshowModal}>
+{renderComponent}
+</Modal>
+)}
+</View>
+...
+function generateOptions(selectComponent) {
+return [
+{
+title: "Cambiar nombre y apellidos",
+iconType: "material-community",
+iconNameLeft: "account-circle",
+iconColorLeft: "#ccc",
+iconNameRight: "chevron-right",
+iconColorRight: "#ccc",
+onPress: () => selectComponent("displayName"),
+},
