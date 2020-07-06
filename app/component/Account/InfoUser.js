@@ -11,6 +11,7 @@ export default function InfoUser(props) {
     toastRef,
     setLoading,
     setLoadingText,
+    setReloadUserInfo,
   } = props;
   const changeAvatar = async () => {
     const resultPermission = await Permissions.askAsync(
@@ -34,11 +35,12 @@ export default function InfoUser(props) {
           .then(() => {
             console.log("imagen subida");
             updatePhotoUrl();
+            setReloadUserInfo(true);
             setLoading(false);
             toastRef.current.show("Imagen de avatar subida");
           })
           .catch(() => {
-            setLoadings(false);
+            setLoading(false);
             toastRef.current.show("Error al actualizar avatar");
           });
       }

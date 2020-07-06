@@ -297,3 +297,37 @@ iconNameRight: "chevron-right",
 iconColorRight: "#ccc",
 onPress: () => selectComponent("displayName"),
 },
+
+## Cambiar nombre form en modal, input con mensaje error, button con loading
+
+// en ChangeDisplayNameForm.js
+const [error, setError] = useState(null);
+const [isLoading, setIsLoading] = useState(false);
+
+const onSubmit = () => {
+...
+} else {
+setIsLoading(true);
+const update = {
+displayName: newDisplayName,
+};
+firebase
+.auth()
+.currentUser.updateProfile(update)
+.then(() => {
+setIsLoading(false);
+setReloadUserInfo(true);
+setShowModal(false);
+})
+...
+<Input
+...
+errorMessage={error}
+/>
+<Button
+        title="Cambiar nombre"
+        containerStyle={styles.btnContainer}
+        buttonStyle={styles.btn}
+        onPress={onSubmit}
+        loading={isLoading}
+/>

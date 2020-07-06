@@ -1,17 +1,15 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { ListItem } from "react-native-elements";
 import { map } from "lodash";
-import Modal from "../../component/Modal";
+import Modal from "../Modal";
 import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
 
 export default function AccountOptions(props) {
-  const { userInfo, toastRef } = props;
+  const { userInfo, toastRef, setReloadUserInfo } = props;
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
-
   const selectComponent = (key) => {
-    console.log(userInfo);
     switch (key) {
       case "displayName":
         setRenderComponent(
@@ -19,6 +17,7 @@ export default function AccountOptions(props) {
             displayName={userInfo.displayName}
             setShowModal={setShowModal}
             toastRef={toastRef}
+            setReloadUserInfo={setReloadUserInfo}
           />
         );
         setShowModal(true);
