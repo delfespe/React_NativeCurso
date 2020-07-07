@@ -331,3 +331,32 @@ errorMessage={error}
         onPress={onSubmit}
         loading={isLoading}
 />
+
+## Cambiar correo form en modal, reautenticacion y actualizar email en firebase
+
+// en Api.js
+export function reauthenticate(password) {
+const user = firebase.auth().currentUser;
+const credentials = firebase.auth.EmailAuthProvider.credential(
+user.email,
+password
+);
+return user.reauthenticateWithCredential(credentials);
+}
+
+// en ChangeEmailForm.js
+const updateEmail = () => {
+firebase
+.auth()
+.currentUser.updateEmail(formData.email)
+.then(() => {
+setReloadUserInfo(true);
+toastRef.current.show("Email actualizado correctamente");
+setIsLoading(false);
+setShowModal(false);
+})
+.catch(() => {
+setIsLoading(false);
+setErrors({ email: "Error al actualizar el email" });
+});
+};
