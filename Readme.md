@@ -360,3 +360,24 @@ setIsLoading(false);
 setErrors({ email: "Error al actualizar el email" });
 });
 };
+
+## Cambiar contraseña form modal y actualizar en firebase
+
+// en ChangePasswordForm.js
+...
+} else {
+setIsLoading(true);
+reauthenticate(formData.password)
+.then((response) => {
+firebase
+.auth()
+.currentUser.updatePassword(formData.newPassword)
+.then(() => {
+setIsLoading(false);
+setShowModal(false);
+firebase.auth().signOut();
+})
+.catch(() => {
+setErrors({ other: "Error al actualizar la contraseña" });
+});
+})
