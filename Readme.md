@@ -381,3 +381,181 @@ firebase.auth().signOut();
 setErrors({ other: "Error al actualizar la contraseña" });
 });
 })
+
+## Restaurantes, subir imagenes a la galeria, mostrar mapa google
+
+//subir imagenes a firebase storage
+const uploadImagesStorage = async () => {
+const imageBlob = [];
+await Promise.all(
+map(imagesSelected, async (image) => {
+const response = await fetch(image);
+const blob = await response.blob();
+const ref = firebase.storage().ref("restaurants").child(uuid());
+await ref.put(blob).then(async (result) => {
+await firebase
+.storage()
+.ref(`restaurants/${result.metadata.name}`)
+.getDownloadURL()
+.then((photoUrl) => {
+imageBlob.push(photoUrl);
+});
+});
+})
+);
+return imageBlob;
+};
+
+// crear registro en firebase base de datos
+import "firebase/firestore";
+const db = firebase.firestore(firebaseApp);
+...
+uploadImagesStorage().then((response) => {
+//console.log(response);
+db.collection("restaurants")
+.add({
+name: formData.name,
+address: formData.address,
+description: formData.description,
+location: locationRestaurant,
+images: response,
+rating: 0,
+ratingTotal: 0,
+quantityVoting: 0,
+createAt: new Date(),
+createBy: firebase.auth().currentUser.uid,
+})
+.then(() => {
+setIsLoading(false);
+navigation.navigate("home");
+})
+.catch(() => {
+setIsLoading(false);
+toastRef.current.show("Error al subir restaurante");
+});
+});
+}
+};
+
+// obtener ancho de la pantalla
+import { Dimensions } from "react-native";
+const widthScreen = Dimensions.get("window").width;
+
+// funcion Alert
+const removeImage = (image) => {
+Alert.alert(
+"Eliminar imagen",
+"Estas seguro que quieres eliminar la imagen?",
+[
+{ text: "Cancel", style: "cancel" },
+{
+text: "Eliminar",
+onPress: () => {
+const test = filter(
+imagesSelected,
+(imageUrl) => imageUrl !== image
+);
+setImagesSelected(test);
+},},]);};
+
+// recorrer un arreglo con map (lodash)
+<View style={styles.viewImages}>
+{map(imagesSelected, (imageRestaurant, index) => (
+<Avatar
+key={index}
+containerStyle={styles.miniatureStyles}
+source={{ uri: imageRestaurant }}
+onPress={() => removeImage(imageRestaurant)}
+/>
+))}
+</View>
+
+// isntalar reactive map: visor de mapas
+yarn add react-native-maps@~0.26.1
+
+// instalar expo location: lee informacion de geolocalizacion desde el celular
+yarn add expo-location@~8.1.0
+
+// en android para que funcione el mapa requiere configuracion: añadir sdk de google maps
+
+// peticiones asincronas para await, anonima () y autoejecutable ()
+(async () => {}) ()
+
+// añadir permisos para que expor use la ubicacion
+"android": {
+"permissions": [
+...
+"LOCATION",
+]
+// añadir permisos para que ANDROID use la ubicacion
+"android": {
+"permissions": [
+...
+"ACCESS_COARSE_LOCATION",
+"ACCESS_FINE_LOCATION",
+]
+
+// instalar libreria que genera numero unico que se usara para guardar las imagenes en firebase
+yarn add random-uuid-v4@~0.0.9
+
+// crear base de datos en firebase:
+
+1. Seleccionar > Database > Crear base de datos > click
+2. Seleccionar > empezar modo produccion > siguiente
+3. Seleccionar > listo
+4. Seleccionar > reglas > cambiar:
+   allow read, write: if false;
+   por:
+   allow read, write: if true;
+5. Seleccionar > publicar
+
+// guardando en firestore
+
+// corregir error: [Unhandled promise rejection: ReferenceError: Can't find variable: atob]
+// instalae base-64
+yarn add base-64@~0.1.0
+// en App.js
+import {decode, encode} from "base-64"
+if(!global.btoa) global.btoa=encode;
+if(!global.atob) global.btoa=decode;
+
+// compilar aplicacion
+// en app.json:
+"android": {
+"package": "com.delfin.cincotenedores",
+
+expo build:android
+
+// transferir archivo apk al mobile instalar en el celu la app: sweech - wifi file transfer
+
+// desplegar app en Android
+
+1.  modificar en app.json y compilar
+    "android": {
+    "package": "com.delfin.cincotenedores",
+2.  Abrir en browser el Google API Manager:
+    https://console.developers.google.com/
+3.  crea proyecto o seleccionar: 5-Tenedores
+4.  seleccionar: Habilitar APIS y servicios
+5.  Seleccionar: Maps SDK for Android > HABILITAR
+6.  Ir a:to https://console.developers.google.com/apis/credentials
+7.  Seleccionar: Create Credentials > Clave de API
+8.  En el modal > copiar clave :
+    AIzaSyBn2X4PYNGNZen4PNOhH_0xafox6XrerBY
+9.  click: RESTRICT KEY.
+10. Debajo de Restricciones de Aplicacion, selecionar boton: Apps de Android
+11. Click: AGREGAR ELEMENTO y escribir en Nombre del Paquete: com.delfin.cincotenedores
+12. Para obtener la huella digital ejecutar: expo fetch:android:hashes
+    Google Certificate Fingerprint: 53:9D:97:FA:5A:7E:BC:DF:9E:E3:0A:9F:13:B0:80:D9:77:A7:27:FE
+    Google Certificate Hash (SHA-1): 539D97FA5A7EBCDF9EE30A9F13B080D977A727FE
+    Google Certificate Hash (SHA-256): 3EAC6CCF38BFF19EA64F16993EF19E6400BF9D43C4A4C964BECDBFF2359541F2  
+    Facebook Key Hash: U52X+lp+vN+e4wqfE7CA2XenJ/4=
+
+13. Copiar: Google Certificate Fingerprint y ponerlo en el campo: "SHA-1 certificate fingerprint"
+14. Click: LISTO
+15. Copiar el API Key y ponerlo en app.json
+    "config": {
+    "googleMaps": {
+    "apiKey": "AIzaSyBn2X4PYNGNZen4PNOhH_0xafox6XrerBY"
+    }
+    },

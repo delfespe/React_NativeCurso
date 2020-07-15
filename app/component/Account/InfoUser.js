@@ -33,7 +33,6 @@ export default function InfoUser(props) {
       } else {
         uploaddImage(result.uri)
           .then(() => {
-            console.log("imagen subida");
             updatePhotoUrl();
             setReloadUserInfo(true);
             setLoading(false);
@@ -62,7 +61,6 @@ export default function InfoUser(props) {
       .then(async (response) => {
         const update = { photoURL: response };
         await firebase.auth().currentUser.updateProfile(update);
-        console.log(photoURL);
       });
   };
 

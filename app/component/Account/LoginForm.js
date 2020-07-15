@@ -25,7 +25,6 @@ export default function LoginForm(props) {
         "La contraseña tiene que tener por lo menos 6 caracteres"
       );
     } else {
-      console.log("ok");
       setLoading(true);
       firebase
         .auth()
@@ -36,7 +35,6 @@ export default function LoginForm(props) {
           navigation.navigate("account");
         })
         .catch((err) => {
-          console.log(err);
           setLoading(false);
           toastRef.current.show("Error al iniciar sesion");
         });
