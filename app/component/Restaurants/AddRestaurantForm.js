@@ -176,6 +176,7 @@ function Map(props) {
   const [location, setLocation] = useState(null);
 
   useEffect(() => {
+    console.log("mapa...");
     (async () => {
       const resultPermission = await Permissions.askAsync(Permissions.LOCATION);
       const statusPermissions = resultPermission.permissions.location.status;

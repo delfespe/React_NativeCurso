@@ -1,5 +1,6 @@
 import firebase from "firebase/app";
 
+const connectTimeoutinMillis = 6000; //6 seconds
 const firebaseConfig = {
   apiKey: "AIzaSyC2uInZSGC0wcQxWLcf3SO50agnfNGkQVE",
   authDomain: "tenedores-60e31.firebaseapp.com",

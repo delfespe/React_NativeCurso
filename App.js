@@ -5,6 +5,8 @@ import Navigation from "./app/navigations/Navigation";
 import { decode, encode } from "base-64";
 
 YellowBox.ignoreWarnings(["Setting a timer"]);
+console.ignoredYellowBox = ["Setting a timer"];
+console.disableYellowBox = true;
 
 if (!global.btoa) global.btoa = encode;
 if (!global.atob) global.atob = decode;

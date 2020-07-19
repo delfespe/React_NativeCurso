@@ -59,6 +59,12 @@ https://materialdesignicon.com
 
 yarn add firebase@~7.9.0
 
+// conectarse a la bd de firebase usando clase de conexion firebaseApp.js
+import { firebaseApp } from "../../utils/firebase";
+import firebase from "firebase/app";
+import "firebase/firestore";
+const db = firebase.firestore(firebaseApp);
+
 ## Componente loading y Screen no logueado
 
 ## Screen login y registro
@@ -555,7 +561,70 @@ expo build:android
 14. Click: LISTO
 15. Copiar el API Key y ponerlo en app.json
     "config": {
-    "googleMaps": {
-    "apiKey": "AIzaSyBn2X4PYNGNZen4PNOhH_0xafox6XrerBY"
-    }
+      "googleMaps": {
+        "apiKey": "AIzaSyBn2X4PYNGNZen4PNOhH_0xafox6XrerBY"
+      }
     },
+
+## VSCODE: Cambiar configuracion para que al grabar no formatee los archivos .MD
+// abrir archivo:
+ %APPDATA%\Code\User\settings.json
+ C:\Users\Delfin\AppData\Roaming\Code\User\settings.json
+// adicionar:
+  "[markdown]": {
+    "editor.formatOnSave": false
+  },
+
+## Listado de restaurantes: FlatList, ActivityIndicator, TouchableOpacity
+
+// mostrar lista con FlatList, ActivityIndicator (progreso circular)
+export default function ListRestaurants(props) {
+  const { restaurants, handleLoadMore, isLoading } = props;
+
+  return (
+    <View>
+      {size(restaurants) > 0 ? (
+        <FlatList
+          data={restaurants}
+          renderItem={(restaurant) => <Restaurant restaurant={restaurant} />}
+          keyExtractor={(item, index) => {
+            index.toString();
+          }}
+          onEndReachedThreshold={0.5}
+          onEndReached={handleLoadMore}
+          ListFooterComponent={<FooterList isLoading={isLoading} />}
+        />
+      ) : (
+        <View style={styles.loaderRestaurants}>
+          <ActivityIndicator size="large" />
+          <Text>Cargando restaurantes...</Text>
+        </View>
+      )}
+    </View>
+  );
+}
+
+// TouchableOpacity: al seleccionar item se vuelve opaco 
+function Restaurant(props) {
+  ...
+  return (
+    <TouchableOpacity onPress={goRestaurant}>
+      <View style={styles.viewRestaurant}>
+        <View style={styles.viewRestaurantImage}>
+          <Image
+            style={styles.imageRestaurant}
+            resizeMode="cover"
+            PlaceholderContent={<ActivityIndicator color="fff" />}
+            source={
+              imageRestaurant
+                ? { uri: imageRestaurant }
+                : require("../../../assets/no-image.png")
+            }
+          />
+        </View>
+        ...
+    </TouchableOpacity>
+  );
+}
+ // instalar react carrousel para mostrar las fotos
+ yarn add react-native-snap-carousel@~3.9.1
