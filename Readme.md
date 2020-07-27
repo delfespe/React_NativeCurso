@@ -626,5 +626,26 @@ function Restaurant(props) {
     </TouchableOpacity>
   );
 }
+
+## Mostrar Restaurante: fotos en carousel, rating, informacion, mapa
  // instalar react carrousel para mostrar las fotos
  yarn add react-native-snap-carousel@~3.9.1
+
+//Mostrar mapa con marcador
+    <MapView style={{ height: height, width: "100%" }} initialRegion={location}>
+      <MapView.Marker
+        coordinate={{
+          latitude: location.latitude,
+          longitude: location.longitude,
+        }}
+        draggable
+      />
+    </MapView>
+
+//Mostrar rating
+        <Rating
+          style={styles.rating}
+          imageSize={20}
+          readonly
+          startingValue={parseFloat(rating)}
+        />
