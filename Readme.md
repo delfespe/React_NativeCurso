@@ -649,3 +649,36 @@ function Restaurant(props) {
           readonly
           startingValue={parseFloat(rating)}
         />
+
+# Componente añadir comentarios y puntuacion:
+// componente: ListReview.js, navega al screen AddReviewRestaurant pasandole parametros
+        <Button
+        ....
+          onPress={() => {
+            navigation.navigate("add-review-restaurant", {
+              idRestaurant: idRestaurant,
+            });
+
+// screen: AddReviewRestaurant, recupera los parametros
+export default function AddReviewRestaurant(props) {
+  const { navigation, route } = props;
+  const { idRestaurant } = route.params;
+
+// regresar a la pantalla anterior
+        navigation.goBack()
+
+// En restaurant.js: volver a ejecutarse al tomar el foco
+  useFocusEffect(
+    useCallback(() => {
+      db.collection("restaurants")
+        .doc(id)
+        .get()
+        .then((response) => {
+          const data = response.data();
+          data.id = response.id;
+          setRestaurant(data);
+          setRating(data.rating);
+        });
+    }, [])
+  );
+

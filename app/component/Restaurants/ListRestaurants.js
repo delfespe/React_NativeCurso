@@ -12,8 +12,8 @@ import { size } from "lodash";
 import { useNavigation } from "@react-navigation/native";
 
 export default function ListRestaurants(props) {
-  const { restaurants, handleLoadMore, isLoading } = props;
-  const navigation = useNavigation();
+  const { restaurants, handleLoadMore, isLoading, navigation } = props;
+  //const navigation = useNavigation();
 
   return (
     <View>

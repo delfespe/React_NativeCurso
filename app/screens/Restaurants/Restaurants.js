@@ -81,6 +81,7 @@ export default function Restaurants(props) {
         restaurants={restaurants}
         handleLoadMore={handleLoadMore}
         isLoading={isLoading}
+        navigation={navigation}
       />
       {user && (
         <Icon

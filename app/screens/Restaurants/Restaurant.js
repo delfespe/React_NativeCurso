@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 import { StyleSheet, ScrollView, View, Text, Dimensions } from "react-native";
 import Loading from "../../component/Loading";
 import Carousel from "../../component/Carousel";
+import ListReviews from "../../component/Restaurants/ListReviews";
 import Map from "../../component/Map";
 import { map, size } from "lodash";
 
 import { Rating, ListItem } from "react-native-elements";
+
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
 import "firebase/firestore";
@@ -21,17 +24,19 @@ export default function Restaurant(props) {
 
   navigation.setOptions({ title: name });
 
-  useEffect(() => {
-    db.collection("restaurants")
-      .doc(id)
-      .get()
-      .then((response) => {
-        const data = response.data();
-        data.id = response.id;
-        setRestaurant(data);
-        setRating(data.rating);
-      });
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      db.collection("restaurants")
+        .doc(id)
+        .get()
+        .then((response) => {
+          const data = response.data();
+          data.id = response.id;
+          setRestaurant(data);
+          setRating(data.rating);
+        });
+    }, [])
+  );
 
   if (!restaurant) {
     return <Loading isVisible={true} text="Cargando restaurante" />;
@@ -55,6 +60,11 @@ export default function Restaurant(props) {
           phone={restaurant.phone}
           email={restaurant.email}
         ></RestautrantInfo>
+        <ListReviews
+          navigation={navigation}
+          idRestaurant={restaurant.id}
+          setRating={setRating}
+        ></ListReviews>
       </ScrollView>
     );
   }
