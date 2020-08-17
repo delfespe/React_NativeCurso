@@ -682,3 +682,30 @@ export default function AddReviewRestaurant(props) {
     }, [])
   );
 
+# Obteniendo los comentariios del retaurante: fecha y filtro coleccion
+// ListReviews.js filtrar comentarios
+  useEffect(() => {
+    db.collection("reviews")
+      .where("idRestaurant", "==", idRestaurant)
+      .get()
+      .then((response) => {
+        const resultReviews = [];
+        response.forEach((doc) => {
+          const data = doc.data();
+          data.id = doc.id;
+          resultReviews.push(data);
+        });
+        setReviews(resultReviews);
+      });
+  }, []);
+
+// mostrar fecha:
+  const createReview = new Date(createAt.seconds * 1000);
+
+        <Text style={styles.reviewDate}>
+          {createReview.getDate()}/{createReview.getMonth() + 1}/
+          {createReview.getFullYear()} - {createReview.getHours()}:
+          {createReview.getMinutes() < 10 ? "0" : ""}
+          {createReview.getMinutes()}
+        </Text>
+
